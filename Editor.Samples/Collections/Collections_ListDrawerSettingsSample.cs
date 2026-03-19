@@ -14,7 +14,6 @@ public class Collections_ListDrawerSettingsSample : ScriptableObject
     [ListDrawerSettings(Draggable = false, AlwaysExpanded = true)]
     public Vector3[] vectors;
 
-    [ListDrawerSettings(ShowElementLabels = true)]
     public MyStruct[] namedStructs = new MyStruct[]
     {
         new MyStruct {name = "First", value = 1},
@@ -26,5 +25,14 @@ public class Collections_ListDrawerSettingsSample : ScriptableObject
     {
         public string name;
         public int value;
+
+        #region カスタマイズ: ToStringメソッドがoverrideされている場合、リスト要素のラベルとして利用する
+
+        public override string ToString()
+        {
+            return $"name={name}, value={value}";
+        }
+
+        #endregion
     }
 }

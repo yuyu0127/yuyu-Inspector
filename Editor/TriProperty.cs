@@ -14,7 +14,7 @@ namespace TriInspector
     public sealed class TriProperty
     {
         private static readonly StringBuilder SharedPropertyPathStringBuilder = new StringBuilder();
-        
+
         private static readonly IReadOnlyList<TriValidationResult> EmptyValidationResults =
             new List<TriValidationResult>();
 
@@ -588,7 +588,7 @@ namespace TriInspector
                 BuildPropertyPath(property.Parent, sb);
                 sb.Append('.');
             }
-            
+
             if (property.IsArrayElement)
             {
                 sb.Append("Array.data[").Append(property.IndexInArray).Append(']');
@@ -738,6 +738,43 @@ namespace TriInspector
 
             return TriPropertyType.Reference;
         }
+
+        #region カスタマイズ: Altキー押下時に子要素も展開する
+
+        internal void SetExpanded(bool expanded, bool recursive)
+        {
+            IsExpanded = expanded;
+
+            if (!recursive)
+            {
+                return;
+            }
+
+            switch (PropertyType)
+            {
+                case TriPropertyType.Generic:
+                case TriPropertyType.Reference:
+                {
+                    foreach (var childrenProperty in ChildrenProperties)
+                    {
+                        childrenProperty.SetExpanded(expanded, true);
+                    }
+
+                    break;
+                }
+                case TriPropertyType.Array:
+                {
+                    foreach (var arrayElementProperty in ArrayElementProperties)
+                    {
+                        arrayElementProperty.SetExpanded(expanded, true);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        #endregion
     }
 
     public enum TriPropertyType

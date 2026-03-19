@@ -16,5 +16,17 @@ namespace TriInspector
         {
             Values = values;
         }
+
+        #region カスタマイズ: ドロップダウンを表示する条件を指定可能にする
+
+        public string Condition { get; }
+
+        public DropdownAttribute(string values, string condition)
+        {
+            Values = values;
+            Condition = condition;
+        }
+
+        #endregion
     }
 }

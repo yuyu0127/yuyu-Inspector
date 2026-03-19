@@ -46,6 +46,7 @@ namespace TriInspector.Drawers
                         displayName = ObjectNames.NicifyVariableName(name),
                     })
                     .ToList();
+
                 _isFlags = property.FieldType.GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0;
 
                 var enumFields = property.FieldType.GetFields(BindingFlags.Static | BindingFlags.Public);

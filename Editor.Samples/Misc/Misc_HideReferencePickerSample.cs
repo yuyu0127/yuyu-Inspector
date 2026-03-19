@@ -49,6 +49,6 @@ public class Misc_HideReferencePickerSample : ScriptableObject
     public class MyReferenceType
     {
         public float a;
-        public bool b;
+        public Vector3 b;
     }
 }

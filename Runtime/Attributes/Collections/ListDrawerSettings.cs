@@ -14,5 +14,23 @@ namespace TriInspector
         public bool ShowElementLabels { get; set; }
         public bool ShowDefaultBackground { get; set; } = true;
         public bool ShowAlternatingBackground { get; set; } = true;
+
+        #region カスタマイズ: 要素のラベルを任意に指定可能にする
+
+        public string ElementLabelMethod { get; set; }
+
+        #endregion
+
+        #region カスタマイズ: テーブル対応
+
+        public bool Table { get; set; }
+
+        #endregion
+
+        #region カスタマイズ: 交互の背景色
+
+        public bool AlternatingRowBackgrounds { get; set; }
+
+        #endregion
     }
 }

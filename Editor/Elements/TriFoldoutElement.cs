@@ -65,6 +65,19 @@ namespace TriInspector.Elements
                 return;
             }
 
+            #region カスタマイズ: 縦線表示
+
+            var lineRect = new Rect(position)
+            {
+                x = position.x + 6,
+                y = position.y + 13,
+                height = position.height - 13,
+                width = 1,
+            };
+            EditorGUI.DrawRect(lineRect, new Color(1,1,1,0.1f));
+
+            #endregion
+
             using (var indentedRectScope = TriGuiHelper.PushIndentedRect(contentRect, 1))
             {
                 base.OnGUI(indentedRectScope.IndentedRect);

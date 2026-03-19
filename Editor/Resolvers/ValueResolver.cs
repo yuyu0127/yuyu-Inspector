@@ -2,7 +2,8 @@
 
 namespace TriInspector.Resolvers
 {
-    public static class ValueResolver
+    // カスタマイズ: partial化
+    public static partial class ValueResolver
     {
         public static ValueResolver<T> Resolve<T>(TriPropertyDefinition propertyDefinition,
             string expression)

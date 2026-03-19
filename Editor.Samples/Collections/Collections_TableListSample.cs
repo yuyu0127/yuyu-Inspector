@@ -5,11 +5,24 @@ using UnityEngine;
 
 public class Collections_TableListSample : ScriptableObject
 {
-    [TableList(Draggable = true,
+    #region カスタマイズ: ListDrawerSettings側でのテーブル対応
+
+    // [TableList(Draggable = true,
+    //     HideAddButton = false,
+    //     HideRemoveButton = false,
+    //     AlwaysExpanded = false)]
+    [ListDrawerSettings(Draggable = true,
         HideAddButton = false,
         HideRemoveButton = false,
-        AlwaysExpanded = false)]
+        AlwaysExpanded = false,
+        Table = true)]
+
+    #endregion
+
     public List<TableItem> table;
+
+    [ListDrawerSettings(Table = true)]
+    public List<TableItem2> table2;
 
     [Serializable]
     public class TableItem
@@ -31,5 +44,13 @@ public class Collections_TableListSample : ScriptableObject
         public void Test2()
         {
         }
+    }
+
+    [Serializable]
+    public class TableItem2
+    {
+        public bool flag;
+        public string text;
+        public Vector3 vector;
     }
 }

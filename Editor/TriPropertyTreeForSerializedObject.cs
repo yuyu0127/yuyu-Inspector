@@ -96,7 +96,13 @@ namespace TriInspector
 
             EditorGUI.BeginDisabledGroup(true);
             var scriptRect = EditorGUILayout.GetControlRect(true);
-            scriptRect.xMin += 3;
+
+            #region カスタマイズ: Script描画範囲調整
+
+            // scriptRect.xMin += 3;
+
+            #endregion
+
             EditorGUI.PropertyField(scriptRect, _scriptProperty);
             EditorGUI.EndDisabledGroup();
         }

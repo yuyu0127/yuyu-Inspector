@@ -63,9 +63,14 @@ namespace TriInspector.Utilities
 
                 foreach (var type in types)
                 {
-                    IEnumerable<string> namespaceEnumerator = groupByNamespace && type.Namespace != null
-                        ? type.Namespace.Split('.')
-                        : Array.Empty<string>();
+                    #region カスタマイズ: 型選択時に名前空間を表示しない
+
+                    // IEnumerable<string> namespaceEnumerator = groupByNamespace && type.Namespace != null
+                    //     ? type.Namespace.Split('.')
+                    //     : Array.Empty<string>();
+                    var namespaceEnumerator = Enumerable.Empty<string>();
+
+                    #endregion
 
                     root.AddTypeChild(type, namespaceEnumerator.GetEnumerator());
                 }

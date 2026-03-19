@@ -10,6 +10,12 @@ namespace TriInspector.Validators
     {
         private DropdownValuesResolver<T> _valuesResolver;
 
+        #region カスタマイズ: ドロップダウンを表示する条件を指定可能にする
+
+        private ValueResolver<bool> _conditionResolver;
+
+        #endregion
+
         public override TriExtensionInitializationResult Initialize(TriPropertyDefinition propertyDefinition)
         {
             _valuesResolver = DropdownValuesResolver<T>.Resolve(propertyDefinition, Attribute.Values);
@@ -19,11 +25,34 @@ namespace TriInspector.Validators
                 return error;
             }
 
+            #region カスタマイズ: ドロップダウンを表示する条件を指定可能にする
+
+            if (Attribute.Condition != null)
+            {
+                _conditionResolver = ValueResolver.Resolve<bool>(propertyDefinition, Attribute.Condition);
+
+                if (_conditionResolver.TryGetErrorString(out error))
+                {
+                    return error;
+                }
+            }
+
+            #endregion
+
             return TriExtensionInitializationResult.Ok;
         }
 
         public override TriValidationResult Validate(TriProperty property)
         {
+            #region カスタマイズ: ドロップダウンを表示する条件を指定可能にする
+
+            if (_conditionResolver != null && !_conditionResolver.GetValue(property, true))
+            {
+                return TriValidationResult.Valid;
+            }
+
+            #endregion
+
             foreach (var item in _valuesResolver.GetDropdownItems(property))
             {
                 if (property.Comparer.Equals(item.Value, property.Value))

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -42,6 +43,12 @@ namespace TriInspector
         [PublicAPI]
         public virtual float GetHeight(float width)
         {
+            #region カスタマイズ: WideMode有効化
+
+            using var _ = new WideModeScope(true);
+
+            #endregion
+
             if (!_attached)
             {
                 Debug.LogError($"{GetType().Name} not attached");
@@ -79,6 +86,12 @@ namespace TriInspector
         [PublicAPI]
         public virtual void OnGUI(Rect position)
         {
+            #region カスタマイズ: WideMode有効化
+
+            using var _ = new WideModeScope(true);
+
+            #endregion
+
             if (!_attached)
             {
                 Debug.LogError($"{GetType().Name} not attached");
@@ -211,5 +224,25 @@ namespace TriInspector
         protected virtual void OnDetachFromPanel()
         {
         }
+
+        #region カスタマイズ: WideMode有効化
+
+        private readonly struct WideModeScope : IDisposable
+        {
+            private readonly bool _wideMode;
+
+            public WideModeScope(bool wideMode)
+            {
+                _wideMode = EditorGUIUtility.wideMode;
+                EditorGUIUtility.wideMode = wideMode;
+            }
+
+            public void Dispose()
+            {
+                EditorGUIUtility.wideMode = _wideMode;
+            }
+        }
+
+        #endregion
     }
 }

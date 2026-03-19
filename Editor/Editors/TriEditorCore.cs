@@ -110,8 +110,28 @@ namespace TriInspector.Editors
 
                 EditorGUIUtility.wideMode = true;
                 EditorGUIUtility.hierarchyMode = false;
-                EditorGUIUtility.labelWidth = Mathf.Max(labelMinWidth,
-                    container.resolvedStyle.width * labelWidthRatio - space);
+
+                #region カスタマイズ: ラベル幅を調整可能にする
+
+                // EditorGUIUtility.labelWidth = Mathf.Max(labelMinWidth,
+                //     container.resolvedStyle.width * labelWidthRatio - space);
+
+                var labelWidth = TriSessionState.LabelWidth;
+                if (labelWidth == 0)
+                {
+                    labelWidth = Mathf.Max(labelMinWidth, container.resolvedStyle.width * labelWidthRatio - space);
+                }
+
+                var clamped = Mathf.Clamp(labelWidth, 1, container.resolvedStyle.width - space);
+                if (clamped != labelWidth && clamped > 0)
+                {
+                    TriSessionState.LabelWidth = clamped;
+                    labelWidth = clamped;
+                }
+
+                EditorGUIUtility.labelWidth = labelWidth;
+
+                #endregion
 
                 GUILayout.BeginVertical(Styles.RootLayout);
                 OnInspectorGUI(root);

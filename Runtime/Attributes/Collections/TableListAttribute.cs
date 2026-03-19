@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if FALSE // カスタマイズ: ListDrawerSettings側でのテーブル対応
+using System;
 using System.Diagnostics;
 
 namespace TriInspector
@@ -9,3 +10,4 @@ namespace TriInspector
     {
     }
 }
+#endif
