@@ -2,7 +2,7 @@
   "name": "com.yuyu.yuyuinspector",
   "displayName": "yuyu Inspector",
   "description": "Tri Inspectorのカスタム",
-  "version": "1.15.1-yuyu.2",
+  "version": "1.0.1",
   "unity": "2020.3",
   "author": "yuyu0127 (https://github.com/yuyu0127)",
   "homepage": "https://github.com/yuyu0127/yuyu-Inspector#readme"
