@@ -859,7 +859,14 @@ namespace TriInspector.Elements
                 }
             }
 
-            return GetChild(index).GetHeight(_lastContentWidth);
+            #region カスタマイズ: 高さ計算時にもオーバーライドコンテキストを有効にする
+
+            using (TriPropertyOverrideContext.BeginOverride(ListPropertyOverrideContext.Instance))
+            {
+                return GetChild(index).GetHeight(_lastContentWidth);
+            }
+
+            #endregion
         }
 
         private static object CreateDefaultElementValue(TriProperty property)
@@ -945,6 +952,16 @@ namespace TriInspector.Elements
                 if (IsToStringMethodOverridden(property) && property.Value != null)
                 {
                     displayName = new GUIContent(property.Value.ToString());
+
+                    #region カスタマイズ: 展開時はラベルを非表示にする
+
+                    if (property.IsExpanded)
+                    {
+                        displayName = GUIContent.none;
+                    }
+
+                    #endregion
+
                     return true;
                 }
 
@@ -955,6 +972,16 @@ namespace TriInspector.Elements
                 if (property.PropertyType != TriPropertyType.Primitive)
                 {
                     displayName = new GUIContent("\u2026");
+
+                    #region カスタマイズ: 展開時はラベルを非表示にする
+
+                    if (property.IsExpanded)
+                    {
+                        displayName = GUIContent.none;
+                    }
+
+                    #endregion
+
                     return true;
                 }
 

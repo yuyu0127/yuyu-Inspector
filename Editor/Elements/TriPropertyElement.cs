@@ -51,7 +51,14 @@ namespace TriInspector.Elements
                 return -EditorGUIUtility.standardVerticalSpacing;
             }
 
-            return base.GetHeight(width);
+            #region カスタマイズ: 高さ計算時にもオーバーライドコンテキストを有効にする
+
+            var overrideCtx = TriPropertyOverrideContext.BeginProperty();
+            var height = base.GetHeight(width);
+            overrideCtx.EndProperty();
+            return height;
+
+            #endregion
         }
 
         public override void OnGUI(Rect position)

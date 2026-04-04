@@ -1,4 +1,4 @@
-﻿using TriInspector.Utilities;
+using TriInspector.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,6 +37,15 @@ namespace TriInspector.Elements
         {
             var height = EditorGUIUtility.singleLineHeight;
 
+            #region カスタマイズ: 展開時にヘッダー行を省略する
+
+            if (_property.IsExpanded && _property.DisplayNameContent == GUIContent.none)
+            {
+                height = 0f;
+            }
+
+            #endregion
+
             if (!_property.IsExpanded)
             {
                 return height;
@@ -58,6 +67,36 @@ namespace TriInspector.Elements
                 yMin = position.yMin + headerRect.height,
             };
 
+            #region カスタマイズ: 展開時にヘッダー行を省略する
+
+            if (_property.IsExpanded && _property.DisplayNameContent == GUIContent.none)
+            {
+                // 折りたたみ矢印だけ描画する
+                TriEditorGUI.Foldout(headerRect, _property);
+
+                #region カスタマイズ: 縦線表示
+
+                var lineRect = new Rect(position)
+                {
+                    x = position.x + 6,
+                    y = position.y + 13,
+                    height = position.height - 13,
+                    width = 1,
+                };
+                EditorGUI.DrawRect(lineRect, new Color(1, 1, 1, 0.1f));
+
+                #endregion
+
+                using (var indentedRectScope = TriGuiHelper.PushIndentedRect(position, 1))
+                {
+                    base.OnGUI(indentedRectScope.IndentedRect);
+                }
+
+                return;
+            }
+
+            #endregion
+
             TriEditorGUI.Foldout(headerRect, _property);
 
             if (!_property.IsExpanded)
@@ -67,14 +106,14 @@ namespace TriInspector.Elements
 
             #region カスタマイズ: 縦線表示
 
-            var lineRect = new Rect(position)
+            var lineRect2 = new Rect(position)
             {
                 x = position.x + 6,
                 y = position.y + 13,
                 height = position.height - 13,
                 width = 1,
             };
-            EditorGUI.DrawRect(lineRect, new Color(1,1,1,0.1f));
+            EditorGUI.DrawRect(lineRect2, new Color(1,1,1,0.1f));
 
             #endregion
 
