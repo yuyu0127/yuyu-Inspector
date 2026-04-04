@@ -109,7 +109,7 @@ namespace TriInspector.Drawers
                 EditorGUI.DrawPreviewTexture(position, previewTexture, null, ScaleMode.ScaleToFit);
             }
 
-            if (AssetPreview.IsLoadingAssetPreview(assetToPreview.GetInstanceID()))
+            if (AssetPreview.IsLoadingAssetPreview(assetToPreview.GetEntityId()))
             {
                 property.PropertyTree.RequestRepaint();
             }
